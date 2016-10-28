@@ -19,6 +19,13 @@ import util.BaseHibernateDAO;
 
 
 
+
+
+
+
+
+
+
 /**
  * A data access object (DAO) providing persistence and search support for Black
  * entities. Transaction control of the save(), update() and delete() operations
