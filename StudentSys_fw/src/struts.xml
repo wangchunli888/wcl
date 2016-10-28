@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="login" namespace="/login" extends="struts-default">
+		<action name="registerAction" class="action.RegisterAction">
+			<result type="redirect" name="registerSuccess">/index.jsp?reg_res=${reg_res}
+			</result>
+		</action>
+		<action name="loginAction" class="action.LoginAction">
+			<result type="redirectAction" name="log1">
+				<param name="actionName">mainAction</param>
+				<param name="namespace">/main</param>
+			</result>
+			<result type="redirect" name="log2">/index.jsp?log_res=${log_res}
+			</result>
+		</action>
+
+	</package>
+
+	<package name="main" namespace="/main" extends="struts-default">
+	
+
+		<!-- 定义一个拦截器 -->  
+        <interceptors>  
+            <interceptor name="loginInterceptor"  
+                class="interceptor.LoginInterceptor">  
+            </interceptor>  
+            
+            <interceptor name="autoInterceptor" class="interceptor.AotuloadInterceptor"></interceptor>
+
+             <!-- 拦截器栈 -->  
+            <interceptor-stack name="mydefault">  
+                <interceptor-ref name="defaultStack" /> 
+                <interceptor-ref name="autoInterceptor" />  
+                <interceptor-ref name="loginInterceptor" />  
+            </interceptor-stack>  
+        </interceptors>  
+		
+		<!-- 定义全局Result -->
+		<global-results>
+		<!-- 当返回login视图名时，转入/login.jsp页面 -->
+			<result name="login">/index.jsp</result>
+			<result name="mainAction" type="redirectAction">
+			<param name="actionName">mainAction</param>
+			</result>
+			
+		</global-results>
+		
+		<action name="mainAction" class="action.MainAction">
+			<result>/main.jsp</result>
+			<!-- 使用此拦截器 -->
+			<interceptor-ref name="mydefault" />
+
+		</action>
+		<action name="studAdd" class="action.StudOptAction" method="add">
+		  <result type="redirectAction">mainAction?clsId=${claszId}</result>
+		</action>
+		<action name="studDel" class="action.StudOptAction" method="del">
+		  <result type="redirectAction">mainAction?clsId=${claszId}</result>
+		</action>
+		<action name="studEdit" class="action.StudOptAction" method="edit">
+		  <result type="redirectAction">mainAction?clsId=${claszId}</result>
+		</action>
+	</package>
+</struts>    
