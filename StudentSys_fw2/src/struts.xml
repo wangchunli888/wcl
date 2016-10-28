@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="login" namespace="/login" extends="struts-default">
+      <action name="registerAction" class="action.LoginAction">
+          <result type="redirect" name="registerSuccess">/index.jsp?reg_res=${reg_res}
+          </result>
+      </action>
+		<action name="loginAction" class="action.LoginAction">
+			<result type="redirect" name="log1">
+				<param name="actionName">mainAction</param>
+				<param name="namespace">/main</param>
+			</result>
+			<result type="redirect" name="log2">/index.jsp?log_res=${log_res}
+			</result>
+		</action>
+		<action name="mainAction" class="action.MainAction">
+		<result>/main.jsp</result>
+		</action>
+
+</package>
+
+</struts>    
